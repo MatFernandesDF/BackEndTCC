@@ -17,23 +17,28 @@ Antes de começar, certifique-se de ter instalado as seguintes ferramentas:
 
 1. Clone este repositório:
 
+```bash
 
 Acesse a pasta do projeto:
+
 cd back-end-tcc
 Instale as dependências com o Yarn:
+
 yarn install
 Configuração
-Certifique-se de configurar todas as variáveis de ambiente necessárias. Você pode criar um arquivo .env na raiz do projeto e definir as variáveis necessárias lá.
+Certifique-se de configurar todas as variáveis de ambiente necessárias. Você pode criar um arquivo .env na raiz do projeto e definir as variáveis necessárias lá. Aqui está um exemplo de arquivo .env:
 
+env
+Copy code
 # Environment variables declared in this file are automatically made available to Prisma.
 # See the documentation for more detail: https://pris.ly/d/prisma-schema#accessing-environment-variables-from-the-schema
 
-# Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server, MongoDB and CockroachDB.
+# Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server, MongoDB, and CockroachDB.
 # See the documentation for all the connection string options: https://pris.ly/d/connection-strings
 
 DATABASE_URL="postgresql://postgres:admin@localhost:5432/tcc?schema=public"
 
-#Secret JWT
+# Secret JWT
 JWT_SECRET=
 
 # STRIPE PAGAMENTOS
@@ -44,11 +49,15 @@ STRIPE_CANCEL_URL=http://localhost:3000/formadeconsumo
 
 STRIPE_WEBHOOK_SECRET=
 
-
 Uso
-Inicie o servidor do back end com o seguinte comando:
+Para iniciar o servidor de desenvolvimento, use o seguinte comando:
+
 
 yarn dev
 O servidor estará disponível em http://localhost:3001 por padrão, mas você pode configurar a porta conforme necessário.
 
-Projeto sob a licença MIT 
+Licença
+Este projeto é licenciado sob a Licença MIT.
+
+Contato
+Se você tiver alguma dúvida ou precisar entrar em contato, você pode me encontrar em mateuscaldasfernandes@gmail.com
