@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model Usuario{
+  id String @id @unique
+  nome String
+  email String
+  senha String
+  criado_em DateTime? @default(now())
+  atualizado_em DateTime? @default(now())
+  nivel_acesso Int @default(1)
+  ordens Ordem[]
+  situacao Boolean @default(true)
+  stripe_customer_id String?
+  @@map("usuarios")
+}
+model Categoria{
+  id String @id @default(uuid())
+  nome String
+  criado_em DateTime? @default(now())
+  atualizado_em DateTime? @default(now())
+  situacao Boolean @default(true)
+  @@map("categorias")
+  banner String?
+  produtos Produto[]
+}
+model Produto{
+  id String @id @default(uuid())
+  nome String
+  valor String
+  descricao String
+  banner String
+  criado_em DateTime? @default(now())
+  atualizado_em DateTime? @default(now())
+  disponibilidade Boolean @default(true)
+  categoria Categoria @relation(fields: [categoria_id],references: [id])
+  @@map("produtos")
+  categoria_id String
+  itens Item[]
+}
+model Ordem{
+  id String @id @default(uuid())
+  mesa Int?
+  status Boolean @default(false)
+  rascunho Boolean @default(true)
+  nome String?
+  valor_pago String?
+  criado_em DateTime? @default(now())
+  atualizado_em DateTime? @default(now())
+   usuario Usuario @relation(fields: [usuario_id], references: [id])
+  usuario_id String
+  @@map("ordens")
+  itens Item[]
+
+}
+
+model Item{
+  id String @id @default(uuid())
+  quantia Int
+  criado_em DateTime? @default(now())
+  atualizado_em DateTime? @default(now())
+  ordem Ordem @relation(fields: [ordem_id], references: [id])
+  produto Produto @relation(fields: [produto_id], references: [id])
+  @@map("itens")
+  ordem_id String
+  produto_id String
+}
