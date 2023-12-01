@@ -7,11 +7,11 @@ class FinalizarOrdemControle{
 
     const finalizarOrdemServico = new FinalizarOrdemServico();
 
-    const order = await finalizarOrdemServico.execute({
+    const ordem = await finalizarOrdemServico.execute({
       ordem_id
     })
 
-    return res.json(order);
+    return res.json(ordem);
 
   }
 }

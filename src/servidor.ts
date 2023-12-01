@@ -5,31 +5,31 @@ import path from 'path';
 
 import { rotas } from './rotas';
 
-const startServer = () => {
+const iniciarServer = () => {
     const app = express();
 
-    configureMiddlewares(app);
-    configureRoutes(app);
-    configureErrorHandlers(app);
+    configurarMiddlewares(app);
+    configurarRotas(app);
+    configurarManipuladoresDeErro(app);
 
-    const server = app.listen(3333, () =>
+    const servidor = app.listen(3333, () =>
         console.log('Servidor online')
     );
 
-    return server;
+    return servidor; 
 };
 
-const configureMiddlewares = (app) => {
+const configurarMiddlewares = (app) => {
     app.use(cors());
     app.use(express.json());
     app.use('/files', express.static(path.resolve(__dirname, '..', 'tmp')));
 };
 
-const configureRoutes = (app) => {
+const configurarRotas = (app) => {
     app.use(rotas);
 };
 
-const configureErrorHandlers = (app) => {
+const configurarManipuladoresDeErro = (app) => {
     app.use(
         (err: Error, req: Request, res: Response, next: NextFunction) => {
             if (err instanceof Error) {
@@ -37,12 +37,12 @@ const configureErrorHandlers = (app) => {
             }
             return res.status(500).json({
                 status: 'error',
-                message: 'internal server error'
+                message: 'Erro do Servidor Interno'
             });
         }
     );
 };
 
-const server = startServer();
+const servidor = iniciarServer();
 
-export { server };
+export { servidor };

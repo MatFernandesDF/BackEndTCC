@@ -24,7 +24,7 @@ export function autenticado(
             process.env.JWT_SECRET
         ) as Payload;
 
-        req.user_id = sub;
+        req.usuario_id = sub;
 
         return next();
 

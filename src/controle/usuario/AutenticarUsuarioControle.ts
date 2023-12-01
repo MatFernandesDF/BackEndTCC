@@ -6,12 +6,12 @@ class AutenticarUsuarioControle{
         const{email,senha} = req.body;
             const autenticarUsuarioServico = new AutenticarUsuarioServico();
 
-            const auth = await autenticarUsuarioServico.execute({
+            const autenticar = await autenticarUsuarioServico.execute({
                 email,
                 senha
             })
 
-            return res.json(auth);
+            return res.json(autenticar);
 
     }
 }

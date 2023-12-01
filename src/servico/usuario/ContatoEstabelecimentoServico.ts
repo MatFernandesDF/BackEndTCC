@@ -1,16 +1,16 @@
 import nodemailer from 'nodemailer';
 
-interface ContactRequest {
+interface ContatoRequest {
   nome: string;
   email: string;
   mensagem: string;
 }
 
 class Contato {
-  private transporter;
+  private servidor;
 
   constructor() {
-    this.transporter = nodemailer.createTransport({
+    this.servidor = nodemailer.createTransport({
       host: 'smtp-relay.brevo.com',
       port: 587,
       secure: false,
@@ -21,32 +21,31 @@ class Contato {
     });
   }
 
-  async sendEmail(request: ContactRequest): Promise<void> {
+  async sendEmail(request: ContatoRequest): Promise<void> {
     const { nome, email, mensagem } = request;
 
-    // Configurar o email para o destinatário (você)
-    const destinatarioMailOptions = {
+    
+    const destinatario = {
       from: 'mateuscaldasfernandes@gmail.com',
       to: 'mateuscaldasfernandes@gmail.com',
       subject: 'Contato Recebido',
       text: `Nome do Cliente: ${nome}\nEmail do Cliente: ${email}\n\nMensagem:\n${mensagem}\n\nSua mensagem foi recebida com sucesso. Agradecemos por entrar em contato conosco.`,
     };
 
-    // Configurar o email de retorno para o cliente
-    const clienteMailOptions = {
+  
+    const cliente = {
       from: 'mateuscaldasfernandes@gmail.com',
-      to: email, // Email do cliente
+      to: email, 
       subject: 'Recebemos sua mensagem de contato',
       text: `Olá ${nome},\n\nAgradecemos por entrar em contato conosco. Sua mensagem foi recebida com sucesso e responderemos em breve.\n\nAtenciosamente,\n[Digifood]`,
     };
 
     try {
-      // Enviar o email para o destinatário
-      const destinatarioInfo = await this.transporter.sendMail(destinatarioMailOptions);
+    
+      const destinatarioInfo = await this.servidor.sendMail(destinatario);
       console.log('Email enviado para o destinatário:', destinatarioInfo.response);
 
-      // Enviar o email de retorno para o cliente
-      const clienteInfo = await this.transporter.sendMail(clienteMailOptions);
+      const clienteInfo = await this.servidor.sendMail(cliente);
       console.log('Email de retorno enviado para o cliente:', clienteInfo.response);
     } catch (error) {
       console.error('Erro ao enviar emails:', error);

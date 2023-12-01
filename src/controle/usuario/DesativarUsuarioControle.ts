@@ -3,15 +3,15 @@ import { DesativarUsuarioServico } from '../../servico/usuario/DesativarUsuarioS
 
 class DesativarUsuarioControle{
   async handle(req: Request, res: Response){
-    const { user_id } = req.body;
+    const { usuario_id } = req.body;
 
     const desativarUsuarioServico = new DesativarUsuarioServico();
 
-    const order = await desativarUsuarioServico.execute({
-      user_id
+    const ordem = await desativarUsuarioServico.execute({
+      usuario_id
     })
 
-    return res.json(order);
+    return res.json(ordem);
 
   }
 }

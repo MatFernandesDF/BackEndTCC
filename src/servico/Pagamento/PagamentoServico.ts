@@ -1,12 +1,12 @@
 import prismaClient from "../../prisma";
 import Stripe from 'stripe';
 export interface PagamentoRequest {
-  user_id: string;
+  usuario_id: string;
   valor: number;
   ordem_id:string;
 }
 class PagamentoServico {
-  async execute({ user_id, valor, ordem_id  }: PagamentoRequest) {
+  async execute({ usuario_id, valor, ordem_id }: PagamentoRequest) {
     const stripe = new Stripe(
       process.env.STRIPE_API_KEY,
       {
@@ -18,39 +18,37 @@ class PagamentoServico {
       }
     );
 
-    // Buscar o usuário e cadastrar ele no Stripe caso não tenha cadastrado
-    const findUser = await prismaClient.usuario.findFirst({
+    const encontrarUsuario = await prismaClient.usuario.findFirst({
       where: {
-        id: user_id
+        id: usuario_id
       }
     });
 
-    if (!findUser) {
-      throw new Error('User not found.');
+    if (!encontrarUsuario) {
+      throw new Error('Usuario não existe.');
     }
 
-    let customerId = findUser.stripe_customer_id;
+    let customerId = encontrarUsuario.stripe_customer_id;
 
     if (!customerId) {
-      // Caso não tenha, criamos como cliente lá no Stripe
-      const stripeCustomer = await stripe.customers.create({
-        email: findUser.email
+      const stripeCustomizado = await stripe.customers.create({
+        email: encontrarUsuario.email
       });
 
       await prismaClient.usuario.update({
         where: {
-          id: user_id
+          id: usuario_id
         },
         data: {
-          stripe_customer_id: stripeCustomer.id
+          stripe_customer_id: stripeCustomizado.id
         }
       });
 
-      customerId = stripeCustomer.id;
+      customerId = stripeCustomizado.id;
     }
 
     
-    const stripeCheckoutSession = await stripe.checkout.sessions.create({
+    const checkout = await stripe.checkout.sessions.create({
       customer: customerId,
       payment_method_types: ['card'],
       line_items: [{
@@ -65,14 +63,14 @@ class PagamentoServico {
         quantity: 1
       }],
       mode: 'payment',
-      success_url: `${process.env.STRIPE_SUCCESS_URL}?status=success`,
-      cancel_url: `${process.env.STRIPE_CANCEL_URL}?status=failed`,
-      metadata: { // Adicione o metadado aqui
+      success_url:process.env.STRIPE_SUCCESS_URL,
+      cancel_url:process.env.STRIPE_CANCEL_URL,
+      metadata: { 
         ordem_id: ordem_id
     }
     });
 
-    return { sessionId: stripeCheckoutSession.id };
+    return { sessionId: checkout.id };
   }
 }
 

@@ -1,7 +1,7 @@
 import prismaClient from '../../prisma';
 import { hash } from 'bcryptjs';
 
-interface UserRequest {
+interface UsuarioRequest {
     nome: string;
     email: string;
     senha: string;
@@ -10,7 +10,7 @@ interface UserRequest {
 }
 
 class CriarUsuarioServico {
-    async execute({ id, nome, email, senha, confirmarSenha }: UserRequest) {
+    async execute({ id, nome, email, senha, confirmarSenha }: UsuarioRequest) {
         if (!id) {
             throw new Error("id incorreto");
         }
@@ -18,34 +18,34 @@ class CriarUsuarioServico {
         if (senha !== confirmarSenha) {
             throw new Error("A senha e a confirmação de senha não coincidem");
         }
-        const emailAlreadyExists = await prismaClient.usuario.findFirst({
+        const emailJaExiste = await prismaClient.usuario.findFirst({
             where: {
                 email: email,
             },
         });
 
-        if (emailAlreadyExists) {
+        if (emailJaExiste) {
             throw new Error("Email já está em uso");
         }
 
 
-        const userAlreadyExists = await prismaClient.usuario.findFirst({
+        const usuarioJaExiste = await prismaClient.usuario.findFirst({
             where: {
                 id: id,
             },
         }); 
-        const passwordHash = await hash(senha, 8);
+        const senhaHash = await hash(senha, 8);
 
-        if (userAlreadyExists) {
+        if (usuarioJaExiste) {
             throw new Error("Usuário já existe");
         }
 
-        const user = await prismaClient.usuario.create({
+        const usuario = await prismaClient.usuario.create({
             data: {
                 id: id,
                 nome: nome,
                 email: email,
-                senha: passwordHash,
+                senha: senhaHash,
             },
             select: {
                 nome: true,
@@ -55,7 +55,7 @@ class CriarUsuarioServico {
 
         console.log("Usuário cadastrado com sucesso");
 
-        return user;
+        return usuario;
     }
 }
 

@@ -3,14 +3,13 @@ import { ListarOrdemUsuarioServicos } from '../../servico/ordem/ListarOrdemAtuai
 
 class ListarOrdemAtuaisUsuarioControle {
   async handle(req: Request, res: Response) {
-    const { user_id } = req;
+    const { usuario_id } = req;
 
     const listarOrdemUsuarioServicos = new ListarOrdemUsuarioServicos();
 
-    // Você pode passar o user_id para o serviço, se necessário
-    const ordens = await listarOrdemUsuarioServicos.execute(user_id);
+    const ordem = await listarOrdemUsuarioServicos.execute(usuario_id);
 
-    return res.json(ordens);
+    return res.json(ordem);
   }
 }
 

@@ -1,9 +1,15 @@
 {
-    "version":2,
-    "builds":{
-        "src":"src/servidor.ts",
-        "use":"@vercel/node"
+    "version": 2,
+    "projectSettings": {
+        "framework": "nodejs", 
+        "runtime": "nodejs12.x" 
     },
-    "routes":"(.*)",
-    "dest":"src/server.ts"
+    "builds": [{
+        "src": "src/servidor.ts",
+        "use": "@vercel/node"
+    }],
+    "routes": [{
+        "src": "(.*)",
+        "dest": "src/servidor.ts"
+    }]
 }

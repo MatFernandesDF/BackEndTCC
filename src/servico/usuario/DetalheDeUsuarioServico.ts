@@ -1,10 +1,10 @@
 import prismaClient from "../../prisma";
 
 class DetalheDeUsuarioServico{
-    async execute(user_id: string){
-        const user = await prismaClient.usuario.findFirst({
+    async execute(usuario_id: string){
+        const usuario = await prismaClient.usuario.findFirst({
          where:{
-            id:user_id
+            id:usuario_id
          },
          select:{
           id:true,
@@ -13,7 +13,7 @@ class DetalheDeUsuarioServico{
           nivel_acesso:true,
          }
         })
-           return user;
+           return usuario;
          }
        }
 export { DetalheDeUsuarioServico }

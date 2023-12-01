@@ -11,7 +11,7 @@ class CriarCategoriaControle{
     const criarCategoriaServico = new CriarCategoriaServico();
 
     if(!req.file){
-        throw new Error("error upload file")
+        throw new Error("erro ao carregar arquivo")
     }else{
 
         const {originalname,filename:banner} = req.file;

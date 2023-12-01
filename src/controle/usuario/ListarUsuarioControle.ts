@@ -7,7 +7,6 @@ class ListarUsuariosControle {
       const listarUsuariosServico = new ListarUsuariosServico();
       const usuarios = await listarUsuariosServico.execute();
 
-      // Selecione apenas os campos desejados
       const usuariosSelecionados = usuarios.map((usuario) => ({
         id: usuario.id,
         nome: usuario.nome,
@@ -18,7 +17,7 @@ class ListarUsuariosControle {
 
       return res.json(usuariosSelecionados);
     } catch (error) {
-      // Trate os erros aqui, por exemplo:
+
       console.error('Erro ao listar usuários:', error);
       return res.status(500).json({ erro: 'Erro ao listar usuários' });
     }

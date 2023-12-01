@@ -4,7 +4,7 @@ class ListarCategoriaServico {
   async execute() {
     const categoriasAtivadas = await prismaClient.categoria.findMany({
       where: {
-        situacao: true // Filtre as categorias onde a propriedade 'ativada' seja verdadeira
+        situacao: true 
       }
     });
 

@@ -5,9 +5,9 @@ class ListarOrdemConcluidasControle{
   async handle(req: Request, res: Response){
     const listarOrdemConcluidasServico = new ListarOrdemConcluidasServico()
 
-    const ordens = await listarOrdemConcluidasServico.execute();
+    const ordem = await listarOrdemConcluidasServico.execute();
 
-    return res.json(ordens);
+    return res.json(ordem);
 
   }
 }

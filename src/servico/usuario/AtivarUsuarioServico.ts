@@ -1,15 +1,15 @@
 import prismaClient from "../../prisma";
 
 interface OrdemRequest{
-  user_id: string;
+  usuario_id: string;
 }
 
 class AtivarUsuarioServico{
-  async execute({ user_id }: OrdemRequest){
+  async execute({ usuario_id }: OrdemRequest){
 
     const ordem = await prismaClient.usuario.update({
       where:{
-        id: user_id
+        id: usuario_id
       },
       data:{
         situacao: true,

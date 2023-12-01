@@ -3,15 +3,15 @@ import { DetalharUsuarioServico } from '../../servico/usuario/DetalharUsuarioSer
 
 class DetalharUsuarioControle {
   async handle(req: Request, res: Response) {
-    const usuario_id = req.query.usuario_id as string; // Altere o nome do parâmetro para 'usuario_id'
+    const usuario_id = req.query.usuario_id as string; 
 
-    const detalharUsuarioServico = new DetalharUsuarioServico(); // Crie uma instância do serviço de detalhar usuário
+    const detalharUsuarioServico = new DetalharUsuarioServico();
 
     const usuario = await detalharUsuarioServico.execute({
       usuario_id,
     });
 
-    return res.json(usuario); // Retorne os detalhes do usuário como JSON
+    return res.json(usuario); 
   }
 }
 

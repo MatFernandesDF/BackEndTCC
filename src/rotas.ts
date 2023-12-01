@@ -3,7 +3,6 @@ import { CriarUsuarioControle } from './controle/usuario/CriarUsuarioControle';
 import { AutenticarUsuarioControle } from './controle/usuario/AutenticarUsuarioControle';
 import { DetalheDeUsuarioControle } from './controle/usuario/DetalheDeUsuarioControle';
 import { RecuperarSenhaControle } from './controle/usuario/RecuperarSenhaControle';
-import { AlterarSenhaControle } from './controle/usuario/AlterarSenhaControle';
 import { ListarUsuariosControle } from './controle/usuario/ListarUsuarioControle';
 import { DetalharUsuarioControle } from './controle/usuario/DetalharUsuarioControle';
 import { AtualizarUsuarioControle } from './controle/usuario/AtualizarDadosControle';
@@ -59,7 +58,6 @@ rotas.get('/usuarios/detalhar', autenticado, new DetalharUsuarioControle().handl
 rotas.put('/AlterarDados',autenticado, new AtualizarUsuarioControle().handle);
 rotas.put('/DesativarUsuario', new DesativarUsuarioControle().handle);
 rotas.put('/AtivarUsuario', new AtivarUsuarioControle().handle);
-rotas.put('/alterar', autenticado, new AlterarSenhaControle().handle);
 rotas.post('/Contato', new ContatoEstabelecimentoControle().handle);
 // ROTAS DE CATEGORIAS
 rotas.post('/categorias1', autenticado, upload.single('imagem'), new CriarCategoriaControle().handle);

@@ -4,13 +4,13 @@ import { DetalheDeUsuarioServico } from '../../servico/usuario/DetalheDeUsuarioS
 
 class DetalheDeUsuarioControle{
     async handle(req:Request, res:Response){
-        const user_id = req.user_id;
+        const usuario_id = req.usuario_id;
        
         const detalheDeUsuarioServico = new DetalheDeUsuarioServico();
 
-        const user = await detalheDeUsuarioServico.execute(user_id);
+        const usuario = await detalheDeUsuarioServico.execute(usuario_id);
 
-        return res.json(user);
+        return res.json(usuario);
 
     }
 }

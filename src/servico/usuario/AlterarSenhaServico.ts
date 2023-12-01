@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 class AlterarSenhaServico {
-  async execute({ user_id, novasenha, confirmarsenha }: { user_id: string; novasenha: string; confirmarsenha: string }) {
+  async execute({ usuario_id, novasenha, confirmarsenha }: { usuario_id: string; novasenha: string; confirmarsenha: string }) {
     if (novasenha !== confirmarsenha) {
       throw new Error("A nova senha e a confirmação de senha não correspondem.");
     }
@@ -14,7 +14,7 @@ class AlterarSenhaServico {
 
 
     await prisma.usuario.update({
-      where: { id: user_id },
+      where: { id: usuario_id },
       data: { senha: senhaHash },
     });
 
